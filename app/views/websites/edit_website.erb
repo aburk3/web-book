@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <h3> Edit Website </h3>
+    <div>
+      <form method="post" action="/websites/<%=@website.id%>">
+        <input id="hidden" type="hidden" name="_method" value="PATCH">
+        <textarea method="PATCH" id="content" name="content" cols="40" rows="5"><%= @website.content %></textarea>
+        <input type="submit" value="Complete">
+      </form>
+    </div>
+  </body>
+</html>

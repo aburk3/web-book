@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+
+    <title></title>
+  </head>
+  <body>
+    <p>Welcome, <%= current_user.username.capitalize %>!</p>
+    <form action="/websites/new" method="GET">
+      <button type="submit" name="button">Add New Website</button>
+    </form>
+    <br>
+    <% @websites.sort.each.with_index do |website, index| %>
+      <div>
+        <%= website.content %>
+        <label>- <a href="/websites/<%= website.id %>">Edit</a></label>
+      </div>
+      <br>
+    <% end %>
+    <br><br>
+    <a href="/logout">Logout</a>
+  </body>
+</html>

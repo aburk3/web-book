@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <p><%= @website.content %></p>
+
+    <form action="/websites/<%= @website.id %>/delete" method="post">
+      <input id="hidden" type="hidden" name="_method" value="DELETE">
+      <input type="submit" value="Delete Website">
+    </form>
+    <a href="/websites/<%= @website.id %>/edit">Edit Website</a>
+    <br><br>
+    <a href="/websites">Home</a>
+    <br>
+    <a href="/logout">Logout</a>
+
+  </body>
+</html>

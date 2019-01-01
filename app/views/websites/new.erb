@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <h1>Add Your New Favorite Website!</h1>
+
+    <div class="#">
+      <form action="/websites" method="POST">
+        <br>
+        <textarea method="POST" id="content" name="content" cols="40" rows="5"></textarea>
+        <br>
+        <label>Add any relevant tags</label>
+        <select>
+          <option value="">-</option>
+          <option id="social" name="social" value="Social Media">Social Media</option>
+          <option value="Clothing">Clothing</option>
+          <option value="Programming">Programming</option>
+          <option value="Learning">Learning</option>
+          <option value="Travel">"Travel"</option>
+        </select>
+        <input type="submit" value="submit" class="submitButton">
+      </form>
+    </div>
+
+    <a href="/websites">Cancel</a>
+  </body>
+</html>
