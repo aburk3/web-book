@@ -17,13 +17,15 @@ class WebsitesController < ApplicationController
   end
 
   post '/websites' do
-    binding.pry
+
     if logged_in?
       if params[:content] == ""
         redirect to "/websites/new"
       else
+        binding.pry
         @website = current_user.websites.build(content: params[:content])
-        if @website.save
+        @tag = current_user.tags.build(content: params[:dropdown])
+        if @website.save && @tag.save
           redirect to "/websites/#{@website.id}"
         else
           redirect to "/websites/new"
