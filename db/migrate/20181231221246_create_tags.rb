@@ -3,6 +3,7 @@ class CreateTags < ActiveRecord::Migration
     create_table :tags do |t|
       t.integer :user_id
       t.integer :website_id
+      t.text :content
 
       t.timestamps null: false
     end

@@ -2,6 +2,7 @@ class WebsitesController < ApplicationController
   get '/websites' do
     if logged_in?
       @websites = Website.all
+      binding.pry
       erb :'websites/websites'
     else
       redirect to '/login'
@@ -17,12 +18,10 @@ class WebsitesController < ApplicationController
   end
 
   post '/websites' do
-
     if logged_in?
       if params[:content] == ""
         redirect to "/websites/new"
       else
-        binding.pry
         @website = current_user.websites.build(content: params[:content])
         @tag = current_user.tags.build(content: params[:dropdown])
         if @website.save && @tag.save
@@ -39,6 +38,7 @@ class WebsitesController < ApplicationController
   get '/websites/:id' do
     if logged_in?
       @website = Website.find_by_id(params[:id])
+      @tag = Tag.all.last
       erb :'websites/show_website'
     else
       redirect to '/login'
