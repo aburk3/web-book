@@ -10,8 +10,21 @@
       <form method="post" action="/websites/<%=@website.id%>">
         <input id="hidden" type="hidden" name="_method" value="PATCH">
         <textarea method="PATCH" id="content" name="content" cols="40" rows="5"><%= @website.content %></textarea>
+        <br>
+        <label>Add any relevant tags</label>
+        <select name="dropdown">
+          <option value="">-</option>
+          <option value="Social Media">Social Media</option>
+          <option value="Clothing">Clothing</option>
+          <option value="Programming">Programming</option>
+          <option value="Learning">Learning</option>
+          <option value="Travel">Travel</option>
+          <option value="Entertainment">Entertainment</option>
+        </select>
         <input type="submit" value="Complete">
       </form>
+      <br><br>
+      <a href="/websites">Cancel</a>
     </div>
   </body>
 </html>

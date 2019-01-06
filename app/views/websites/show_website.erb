@@ -6,8 +6,7 @@
   </head>
   <body>
     <p><%= @website.content %></p>
-    <p><%= @tag.content %></p>
-
+    <p><%= @website.tag.content %></p>
     <form action="/websites/<%= @website.id %>/delete" method="post">
       <input id="hidden" type="hidden" name="_method" value="DELETE">
       <input type="submit" value="Delete Website">
