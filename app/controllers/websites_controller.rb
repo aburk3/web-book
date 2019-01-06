@@ -15,7 +15,7 @@ class WebsitesController < ApplicationController
     end
 
     @uniq_tags = tags.uniq
-    
+
     if logged_in?
       erb :'websites/new'
     else
@@ -28,10 +28,11 @@ class WebsitesController < ApplicationController
       if params[:content] == ""
         redirect to "/websites/new"
       else
-        @website = current_user.websites.build(content: params[:content])
 
-        @website.tag = Tag.create(content: params[:dropdown])
-        @tag = current_user.tags.build(content: params[:dropdown])
+        @website = current_user.websites.build(content: params[:content].downcase)
+
+        @website.tag = Tag.create(content: params[:dropdown].downcase)
+        @tag = current_user.tags.build(content: params[:dropdown].downcase)
 
         if @website.save && @tag.save
           redirect to "/websites"
@@ -87,4 +88,15 @@ class WebsitesController < ApplicationController
     end
   end
 
+  delete '/websites/:id/delete' do
+    if logged_in?
+      @website = Website.find_by_id(params[:id])
+      if @website && @website.user == current_user
+        @website.delete
+      end
+      redirect to '/websites'
+    else
+      redirect to '/login'
+    end
+  end
 end

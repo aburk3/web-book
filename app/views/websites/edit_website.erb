@@ -24,6 +24,11 @@
         <input type="submit" value="Complete">
       </form>
       <br><br>
+      <form action="/websites/<%= @website.id %>/delete" method="post">
+        <input type="hidden" name="_method" value="DELETE">
+        <input type="submit" value="Delete Website">
+      </form>
+      <br>
       <a href="/websites">Cancel</a>
     </div>
   </body>

@@ -5,6 +5,11 @@
     <title></title>
   </head>
   <body>
-    <% binding.pry %>
+    <h1><u>All Websites with the Tag of: <i><%= @tag.last.content %></i></u></h1>
+    <% @tags.each do |tag| %>
+      <ul>
+        <li><%= tag.websites.last.content %></li>
+      </ul>
+    <% end %>
   </body>
 </html>
