@@ -9,6 +9,13 @@ class WebsitesController < ApplicationController
   end
 
   get '/websites/new' do
+    tags = []
+    Tag.all.each do |tag|
+      tags << tag.content.downcase
+    end
+
+    @uniq_tags = tags.uniq
+    
     if logged_in?
       erb :'websites/new'
     else

@@ -7,12 +7,11 @@ class TagsController < ApplicationController
 
       @tags = []
       Tag.all.each do |tag|
-        
         if tag.websites.any? && tag.content == @tag.last.content
           @tags << tag
         end
       end
-      binding.pry
+
       if @website && @website.user == current_user
         erb :'tags/show_tag'
       else
