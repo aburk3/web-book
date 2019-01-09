@@ -8,7 +8,7 @@
     <h1>Add Your New Favorite Website!</h1>
 
     <div class="#">
-      <form action="/websites" method="POST">
+      <form action="/websites" method="POST" autocomplete="off">
         <br>
         <textarea id="content" name="content" cols="40" rows="5"></textarea>
         <br>
@@ -17,6 +17,7 @@
         
         <input list="tags" name="dropdown">
         <datalist id="tags">
+
           <% @uniq_tags.each do |tag| %>
           <option value="<%= tag %>"></option>
           <% end %>

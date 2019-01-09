@@ -8,7 +8,7 @@
     <h1><u>All Websites with the Tag of: <i><%= @tag.last.content %></i></u></h1>
     <% @tags.each do |tag| %>
       <ul>
-        <li><%= tag.websites.last.content %></li>
+        <li><a href="https://<%= tag.websites.last.content %>" type="button" class="button"><%= tag.websites.last.content %></a></li>
       </ul>
     <% end %>
   </body>

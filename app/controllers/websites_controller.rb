@@ -13,7 +13,7 @@ class WebsitesController < ApplicationController
     Tag.all.each do |tag|
       tags << tag.content.downcase
     end
-
+    
     @uniq_tags = tags.uniq
 
     if logged_in?
@@ -92,7 +92,13 @@ class WebsitesController < ApplicationController
     if logged_in?
       @website = Website.find_by_id(params[:id])
       if @website && @website.user == current_user
-        @website.delete
+        if @website.tag
+          # binding.pry
+          @website.delete
+          @website.tag.delete
+        else
+          @website.delete
+        end
       end
       redirect to '/websites'
     else

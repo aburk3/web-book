@@ -13,9 +13,9 @@
     <br>
     <% @websites.sort.each.with_index do |website, index| %>
       <div>
-        <%= website.content %> <a href="/tags/<%= website.id %>"><sub><i><%= website.tag.content %></i></sub></a>
+        <!-- Need to make a conditional `makeURL` method that checks for https:// -->
+        <a href="https://<%= website.content %>" class="button"><%= website.content %></a> <a href="/tags/<%= website.id %>"><sub><i><%= website.tag.content %></i></sub></a>
         <label>- <a href="/websites/<%= website.id %>/edit">Edit</a></label>
-
       </div>
       <br>
     <% end %>
