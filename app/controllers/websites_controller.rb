@@ -13,7 +13,7 @@ class WebsitesController < ApplicationController
     Tag.all.each do |tag|
       tags << tag.content.downcase
     end
-    
+
     @uniq_tags = tags.uniq
 
     if logged_in?
@@ -29,12 +29,11 @@ class WebsitesController < ApplicationController
         redirect to "/websites/new"
       else
 
-        @website = current_user.websites.build(content: params[:content].downcase)
+        @website = current_user.websites.create(content: params[:content].downcase)
 
         @website.tag = Tag.create(content: params[:dropdown].downcase)
-        @tag = current_user.tags.build(content: params[:dropdown].downcase)
 
-        if @website.save && @tag.save
+        if @website.save
           redirect to "/websites"
         else
           redirect to "/websites/new"
