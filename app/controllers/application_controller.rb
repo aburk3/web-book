@@ -21,6 +21,24 @@ class ApplicationController < Sinatra::Base
     def logged_in?
      !!current_user
     end
+
+    def uniq_tags
+      # tags = []
+      # Tag.all.each do |tag|
+      #   unless tags.include?(tag.id && tag.content.downcase)
+      #     tags << tag.content.downcase
+      #     tags << tag.id
+      #   end
+      # end
+      @tag_instances = []
+      contents = []
+      Tag.all.each do |tag|
+        unless contents.include?(tag.content)
+          contents << tag.content
+          @tag_instances << tag
+        end
+      end
+    end
   end
 
 end

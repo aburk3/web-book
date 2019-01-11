@@ -6,6 +6,20 @@
 
   </head>
   <body>
+
+    <div class="topnav">
+      <a class="active" href="#home">Home</a>
+      <form action="/tags/:id" method="POST" autocomplete="off">
+        <input type="text" placeholder="Search.." list="tags" name="dropdown">
+        <datalist id="tags">
+          <% @tag_instances.each do |tag| %>
+          <option data-value="<%= tag.id %>" value="<%= tag.content %>">
+          <% end %>
+        </datalist>
+        <input type="submit" value="submit" class="submitButton">
+      </form>
+    </div>
+
     <div class="container">
       <%= yield %>
     </div>

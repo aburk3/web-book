@@ -22,4 +22,8 @@ class TagsController < ApplicationController
     end
   end
 
+  post '/tags/:id' do
+    binding.pry
+  end
+
 end

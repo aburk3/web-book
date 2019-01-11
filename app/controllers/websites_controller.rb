@@ -2,6 +2,7 @@ class WebsitesController < ApplicationController
   get '/websites' do
     if logged_in?
       @websites = current_user.websites
+      uniq_tags
       erb :'websites/websites'
     else
       redirect to '/login'
@@ -104,4 +105,5 @@ class WebsitesController < ApplicationController
       redirect to '/login'
     end
   end
+
 end
