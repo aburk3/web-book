@@ -22,7 +22,7 @@ class TagsController < ApplicationController
     end
   end
 
-  post '/tags/:id' do
+  post '/tags' do
     binding.pry
   end
 

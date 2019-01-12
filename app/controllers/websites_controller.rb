@@ -10,6 +10,7 @@ class WebsitesController < ApplicationController
   end
 
   get '/websites/new' do
+    uniq_tags
     tags = []
     Tag.all.each do |tag|
       tags << tag.content.downcase

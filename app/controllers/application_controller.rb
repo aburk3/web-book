@@ -23,13 +23,6 @@ class ApplicationController < Sinatra::Base
     end
 
     def uniq_tags
-      # tags = []
-      # Tag.all.each do |tag|
-      #   unless tags.include?(tag.id && tag.content.downcase)
-      #     tags << tag.content.downcase
-      #     tags << tag.id
-      #   end
-      # end
       @tag_instances = []
       contents = []
       Tag.all.each do |tag|
@@ -40,5 +33,4 @@ class ApplicationController < Sinatra::Base
       end
     end
   end
-
 end
