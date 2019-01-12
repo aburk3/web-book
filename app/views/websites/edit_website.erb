@@ -12,16 +12,13 @@
         <textarea method="PATCH" id="content" name="content" cols="40" rows="5"><%= @website.content %></textarea>
         <br>
         <label>Add any relevant tags</label>
-        <select name="dropdown">
-          <option value="">-</option>
-          <option value="Social Media">Social Media</option>
-          <option value="Clothing">Clothing</option>
-          <option value="Programming">Programming</option>
-          <option value="Learning">Learning</option>
-          <option value="Travel">Travel</option>
-          <option value="Entertainment">Entertainment</option>
-        </select>
-        <input type="submit" value="Complete">
+        <input list="tags" name="dropdown">
+        <datalist id="tags-add">
+          <% @uniq_tags.each do |tag| %>
+          <option value="<%= tag %>">
+          <% end %>
+        </datalist>
+        <input type="submit" value="submit" class="submitButton">
       </form>
       <br><br>
       <form action="/websites/<%= @website.id %>/delete" method="post">

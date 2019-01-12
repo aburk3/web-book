@@ -2,7 +2,7 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
-    
+
     <title></title>
   </head>
   <body>
@@ -11,10 +11,12 @@
       <button type="submit" name="button">Add New Website</button>
     </form>
     <br>
+
     <% @websites.sort.each.with_index do |website, index| %>
       <div>
+        <% binding.pry %>
         <!-- Need to make a conditional `makeURL` method that checks for https:// -->
-        <a href="https://<%= website.content %>" class="button"><%= website.content %></a> <a href="/tags/<%= website.id %>"><sub><i><%= website.tag.content %></i></sub></a>
+        <a target="_blank" href="<%= website.content %>" class="button"><%= website.content %></a> <a href="/tags/<%= website.id %>"><sub><i><%= website.tag.content %></i></sub></a>
         <label>- <a href="/websites/<%= website.id %>/edit">Edit</a></label>
       </div>
       <br>

@@ -33,8 +33,12 @@ class WebsitesController < ApplicationController
 
         @website = current_user.websites.create(content: params[:content].downcase)
 
+        if !@website.content.include?("http") && !@website.content.include?("www")
+          @website.content.prepend("https://")
+        elsif @website.content.include?("www.")
+          @website.content.sub! 'www.', 'https://'
+        end
         @website.tag = Tag.create(content: params[:dropdown].downcase)
-
         if @website.save
           redirect to "/websites"
         else
@@ -47,6 +51,14 @@ class WebsitesController < ApplicationController
   end
 
   get '/websites/:id' do
+    uniq_tags
+
+    tags = []
+    Tag.all.each do |tag|
+      tags << tag.content.downcase
+    end
+    @uniq_tags = tags.uniq
+
     if logged_in?
       @website = Website.find_by_id(params[:id])
       erb :'websites/show_website'
@@ -56,6 +68,14 @@ class WebsitesController < ApplicationController
   end
 
   get '/websites/:id/edit' do
+    uniq_tags
+
+    tags = []
+    Tag.all.each do |tag|
+      tags << tag.content.downcase
+    end
+    @uniq_tags = tags.uniq
+
     if logged_in?
       @website = Website.find_by_id(params[:id])
       if @website && @website.user == current_user
