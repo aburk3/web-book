@@ -32,13 +32,23 @@ class WebsitesController < ApplicationController
       else
 
         @website = current_user.websites.create(content: params[:content].downcase)
-
+        #########################################################
+        ##  Makes sure that 'https:// is prepended to website' ##
+        #########################################################
         if !@website.content.include?("http") && !@website.content.include?("www")
           @website.content.prepend("https://")
         elsif @website.content.include?("www.")
           @website.content.sub! 'www.', 'https://'
         end
+
+        ##################################################################
+        ##  Prevents a tag from having an undefined 'content' value     ##
+        ##################################################################
+        if params[:dropdown] == ""
+          params[:dropdown] = "none"
+        end
         @website.tag = Tag.create(content: params[:dropdown].downcase)
+
         if @website.save
           redirect to "/websites"
         else

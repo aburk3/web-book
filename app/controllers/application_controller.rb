@@ -23,6 +23,9 @@ class ApplicationController < Sinatra::Base
      !!current_user
     end
 
+    ################################################################
+    #  Makes sure not all of a Users Tags show up in Autocomplete  #
+    ################################################################
     def uniq_tags
       @tag_instances = []
       contents = []

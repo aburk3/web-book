@@ -18,6 +18,8 @@ class UsersController < ApplicationController
   post '/signup' do
     if params[:username] == "" || params[:email] == "" || params[:password] == ""
       redirect to '/signup'
+    elsif params[:password] != params[:passwordverify]
+      redirect to '/signup'
     else
       @user = User.new(:username => params[:username], :email => params[:email], :password => params[:password])
       @user.save
@@ -54,5 +56,4 @@ class UsersController < ApplicationController
      redirect to '/'
    end
   end
-
 end
