@@ -10,7 +10,6 @@ class ApplicationController < Sinatra::Base
   end
 
   get '/' do
-    uniq_tags
     erb :index
   end
 
@@ -29,7 +28,7 @@ class ApplicationController < Sinatra::Base
     def uniq_tags
       @tag_instances = []
       contents = []
-      Tag.all.each do |tag|
+      current_user.tags.each do |tag|
         unless contents.include?(tag.content)
           contents << tag.content
           @tag_instances << tag

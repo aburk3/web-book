@@ -7,7 +7,6 @@ class UsersController < ApplicationController
    end
 
   get '/signup' do
-    uniq_tags
      if !logged_in?
        erb :'users/create_user'
      else
@@ -29,7 +28,6 @@ class UsersController < ApplicationController
   end
 
   get '/login' do
-    uniq_tags
     if !logged_in?
       redirect to '/'
     else

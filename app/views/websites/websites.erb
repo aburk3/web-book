@@ -6,6 +6,17 @@
     <title></title>
   </head>
   <body>
+    <div class="topnav">
+      <a class="active" href="/websites">Home</a>
+      <form action="/tags" method="POST" autocomplete="off">
+        <select id="tags" name="dropdown">
+          <% @tag_instances.each do |tag| %>
+          <option  value="<%= tag.id %>"><%= tag.content %></option>
+          <% end %>
+        </select>
+        <input id="tags" type="submit" value="submit" class="submitButton">
+      </form>
+    </div>
     <p>Welcome, <%= current_user.username.capitalize %>!</p>
     <form action="/websites/new" method="GET">
       <button type="submit" name="button">Add New Website</button>
