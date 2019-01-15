@@ -47,7 +47,15 @@ class WebsitesController < ApplicationController
         if params[:dropdown] == ""
           params[:dropdown] = "none"
         end
-        @website.tag = Tag.create(content: params[:dropdown].downcase)
+
+        Tag.all.each do |tag|
+          if tag.content == params[:dropdown].downcase
+            tag.websites << @website
+            binding.pry
+          else
+            @website.tag = Tag.create(content: params[:dropdown].downcase)
+          end
+        end
 
         if @website.save
           redirect to "/websites"

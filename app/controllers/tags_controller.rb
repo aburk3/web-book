@@ -11,7 +11,7 @@ class TagsController < ApplicationController
       ######################################
       if @website && @website.user == current_user
         @tags = []
-        
+
         @tag_instances.each do |tag|
           if tag.websites.any? && tag.content == @tag.last.content
             @tags << tag
@@ -38,6 +38,7 @@ class TagsController < ApplicationController
           @tags << tag
         end
       end
+      binding.pry
       erb :'tags/show_tag'
     else
       redirect to '/login'
