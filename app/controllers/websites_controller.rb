@@ -48,13 +48,16 @@ class WebsitesController < ApplicationController
           params[:dropdown] = "none"
         end
 
-        Tag.all.each do |tag|
-          if tag.content == params[:dropdown].downcase
-            tag.websites << @website
-            binding.pry
-          else
-            @website.tag = Tag.create(content: params[:dropdown].downcase)
+        if Tag.all.any?
+          Tag.all.each do |tag|
+            if tag.content == params[:dropdown].downcase
+              tag.websites << @website
+            else
+              @website.tag = Tag.create(content: params[:dropdown].downcase)
+            end
           end
+        else
+          @website.tag = Tag.create(content: params[:dropdown].downcase)
         end
 
         if @website.save
@@ -132,7 +135,6 @@ class WebsitesController < ApplicationController
       @website = Website.find_by_id(params[:id])
       if @website && @website.user == current_user
         if @website.tag
-          # binding.pry
           @website.delete
           @website.tag.delete
         else
