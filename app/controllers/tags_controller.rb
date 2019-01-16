@@ -38,7 +38,6 @@ class TagsController < ApplicationController
           @tags << tag
         end
       end
-      binding.pry
       erb :'tags/show_tag'
     else
       redirect to '/login'
