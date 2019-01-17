@@ -1,26 +1,17 @@
 class TagsController < ApplicationController
 
   get '/tags/:id' do
-    uniq_tags
-    if logged_in?
-      @website = Website.find_by_id(params[:id])
 
-      @tag = Tag.where(:content => @website.tag.content)
+    if logged_in?
+      @website = current_user.websites.find_by_id(params[:id])
+      @tags = current_user.websites.all.each do |website|
+        website.tag
+      end
+      binding.pry
       ######################################
       #  ONLY SHOW CURRENT USERS WEBSITES  #
       ######################################
-      if @website && @website.user == current_user
-        @tags = []
-
-        @tag_instances.each do |tag|
-          if tag.websites.any? && tag.content == @tag.last.content
-            @tags << tag
-          end
-        end
-        erb :'tags/show_tag'
-      else
-        redirect to '/websites'
-      end
+      erb :'tags/show_tag'
     else
       redirect to '/login'
     end

@@ -52,8 +52,8 @@ class WebsitesController < ApplicationController
         # If a tag has been created previously, you must check that the new tag #
         # does not already exist, otherwise, no check is necessary              #
         #########################################################################
-        if Tag.all.find_by(:content => params[:dropdown])
-          @tag = Tag.all.find_by(:content => params[:dropdown])
+        if Tag.find_by(:content => params[:dropdown])
+          @tag = Tag.find_by(:content => params[:dropdown])
           @tag.websites << @website
         else
           @website.tag = Tag.create(content: params[:dropdown].downcase)
