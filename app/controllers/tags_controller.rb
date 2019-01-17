@@ -8,9 +8,9 @@ class TagsController < ApplicationController
         website.tag
       end
       binding.pry
-      ######################################
-      #  ONLY SHOW CURRENT USERS WEBSITES  #
-      ######################################
+      ###########################################
+      #  ONLY SHOW CURRENT USERS WEBSITES/tags  #
+      ###########################################
       erb :'tags/show_tag'
     else
       redirect to '/login'
