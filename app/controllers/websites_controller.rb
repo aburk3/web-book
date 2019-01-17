@@ -48,14 +48,13 @@ class WebsitesController < ApplicationController
           params[:dropdown] = "none"
         end
 
-        if Tag.all.any?
-          Tag.all.each do |tag|
-            if tag.content == params[:dropdown].downcase
-              tag.websites << @website
-            else
-              @website.tag = Tag.create(content: params[:dropdown].downcase)
-            end
-          end
+        #########################################################################
+        # If a tag has been created previously, you must check that the new tag #
+        # does not already exist, otherwise, no check is necessary              #
+        #########################################################################
+        if Tag.all.find_by(:content => params[:dropdown])
+          @tag = Tag.all.find_by(:content => params[:dropdown])
+          @tag.websites << @website
         else
           @website.tag = Tag.create(content: params[:dropdown].downcase)
         end
@@ -136,7 +135,6 @@ class WebsitesController < ApplicationController
       if @website && @website.user == current_user
         if @website.tag
           @website.delete
-          # @website.tag.delete
         else
           @website.delete
         end
@@ -146,5 +144,4 @@ class WebsitesController < ApplicationController
       redirect to '/login'
     end
   end
-
 end
