@@ -20,7 +20,7 @@ Clone the source locally:
 
 ```sh
 $ git clone https://github.com/aburk3/web-book/
-$ cd foco
+$ cd web-book
 ```
 
 Install project dependencies:
