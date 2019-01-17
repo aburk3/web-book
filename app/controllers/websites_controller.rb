@@ -136,7 +136,7 @@ class WebsitesController < ApplicationController
       if @website && @website.user == current_user
         if @website.tag
           @website.delete
-          @website.tag.delete
+          # @website.tag.delete
         else
           @website.delete
         end
