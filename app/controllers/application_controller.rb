@@ -21,9 +21,5 @@ class ApplicationController < Sinatra::Base
     def logged_in?
      !!current_user
     end
-
-    ################################################################
-    #  Makes sure not all of a Users Tags show up in Autocomplete  #
-    ################################################################
   end
 end

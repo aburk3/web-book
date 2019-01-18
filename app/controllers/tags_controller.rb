@@ -19,5 +19,4 @@ class TagsController < ApplicationController
   post '/tags' do
     redirect to "/tags/#{params[:dropdown]}"
   end
-
 end

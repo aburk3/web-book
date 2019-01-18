@@ -25,7 +25,7 @@ class WebsitesController < ApplicationController
         redirect to "/websites/new"
       else
 
-        @website = current_user.websites.create(content: params[:content].downcase)
+        @website = current_user.websites.build(content: params[:content].downcase)
 
         if !@website.content.include?("http") && !@website.content.include?("www")
           @website.content.prepend("https://")
@@ -33,19 +33,20 @@ class WebsitesController < ApplicationController
           @website.content.sub! 'www.', 'https://'
         end
 
-        if params[:dropdown] == ""
-          params[:dropdown] = "none"
+        # Ensures there won't be a website with an empty tag value
+        if params[:dropdown_tag] == ""
+          params[:dropdown_tag] = "none"
         end
 
         #########################################################################
         # If a tag has been created previously, you must check that the new tag #
         # does not already exist, otherwise, no check is necessary              #
         #########################################################################
-        if Tag.find_by(:content => params[:dropdown])
-          @tag = Tag.find_by(:content => params[:dropdown])
+        if Tag.find_by(:content => params[:dropdown_tag])
+          @tag = Tag.find_by(:content => params[:dropdown_tag])
           @tag.websites << @website
         else
-          @website.tag = Tag.create(content: params[:dropdown].downcase)
+          @website.tag = Tag.create(content: params[:dropdown_tag].downcase)
         end
 
         if @website.save
@@ -60,11 +61,7 @@ class WebsitesController < ApplicationController
   end
 
   get '/websites/:id' do
-
-    Tag.all.each do |tag|
-      tags << tag.content.downcase
-    end
-    @uniq_tags = tags.uniq
+    @tags = current_user.tags
 
     if logged_in?
       @website = Website.find_by_id(params[:id])
@@ -91,7 +88,7 @@ class WebsitesController < ApplicationController
       else
         @website = Website.find_by_id(params[:id])
         if @website && @website.user == current_user
-          if @website.update(content: params[:content]) && @website.tag.update(content:params[:dropdown])
+          if @website.update(content: params[:content]) && @website.tag.update(content:params[:dropdown_tag])
             redirect to "/websites"
           else
             redirect to "/websites/#{@website.id}/edit"

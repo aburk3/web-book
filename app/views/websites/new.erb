@@ -17,7 +17,7 @@
         <br>
         <br>
         <label>Add a tag for this website</label>
-        <input list="tags" name="dropdown">
+        <input list="tags" name="dropdown_tag">
         <datalist id="tags">
           <% @tags.each do |tag| %>
           <option value="<%= tag.content %>"></option>
