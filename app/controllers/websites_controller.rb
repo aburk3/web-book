@@ -2,7 +2,7 @@ class WebsitesController < ApplicationController
   get '/websites' do
     if logged_in?
       @websites = current_user.websites
-      uniq_tags
+      @tags = current_user.tags
       erb :'websites/websites'
     else
       redirect to '/login'
@@ -10,13 +10,7 @@ class WebsitesController < ApplicationController
   end
 
   get '/websites/new' do
-    uniq_tags
-    tags = []
-    Tag.all.each do |tag|
-      tags << tag.content.downcase
-    end
-
-    @uniq_tags = tags.uniq
+    @tags = current_user.tags
 
     if logged_in?
       erb :'websites/new'
@@ -32,18 +26,13 @@ class WebsitesController < ApplicationController
       else
 
         @website = current_user.websites.create(content: params[:content].downcase)
-        #########################################################
-        ##  Makes sure that 'https:// is prepended to website' ##
-        #########################################################
+
         if !@website.content.include?("http") && !@website.content.include?("www")
           @website.content.prepend("https://")
         elsif @website.content.include?("www.")
           @website.content.sub! 'www.', 'https://'
         end
 
-        ##################################################################
-        ##  Prevents a tag from having an undefined 'content' value     ##
-        ##################################################################
         if params[:dropdown] == ""
           params[:dropdown] = "none"
         end
@@ -71,9 +60,7 @@ class WebsitesController < ApplicationController
   end
 
   get '/websites/:id' do
-    uniq_tags
 
-    tags = []
     Tag.all.each do |tag|
       tags << tag.content.downcase
     end
@@ -88,21 +75,10 @@ class WebsitesController < ApplicationController
   end
 
   get '/websites/:id/edit' do
-    uniq_tags
-
-    tags = []
-    Tag.all.each do |tag|
-      tags << tag.content.downcase
-    end
-    @uniq_tags = tags.uniq
-
     if logged_in?
       @website = Website.find_by_id(params[:id])
-      if @website && @website.user == current_user
-        erb :'websites/edit_website'
-      else
-        redirect to '/websites'
-      end
+      @tags = current_user.tags
+      erb :'websites/edit_website'
     else
       redirect to '/login'
     end

@@ -19,8 +19,8 @@
         <label>Add a tag for this website</label>
         <input list="tags" name="dropdown">
         <datalist id="tags">
-          <% @uniq_tags.each do |tag| %>
-          <option value="<%= tag %>"></option>
+          <% @tags.each do |tag| %>
+          <option value="<%= tag.content %>"></option>
           <% end %>
         </datalist>
         <input type="submit" value="submit" class="submitButton">

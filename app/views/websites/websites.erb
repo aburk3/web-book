@@ -10,7 +10,7 @@
       <a class="active" href="/websites">Home</a>
       <form action="/tags" method="POST" autocomplete="off">
         <select id="tags" name="dropdown">
-          <% @tag_instances.each do |tag| %>
+          <% @tags.each do |tag| %>
           <option  value="<%= tag.id %>"><%= tag.content %></option>
           <% end %>
         </select>

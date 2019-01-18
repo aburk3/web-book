@@ -1,7 +1,6 @@
 class UsersController < ApplicationController
 
   get '/users/:slug' do
-    uniq_tags
      @user = User.find_by_slug(params[:slug])
      erb :'users/show'
    end
@@ -48,7 +47,6 @@ class UsersController < ApplicationController
  end
 
  get '/logout' do
-   uniq_tags
    if logged_in?
      session.destroy
      redirect to '/login'
