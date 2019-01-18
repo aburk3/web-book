@@ -25,7 +25,7 @@
 
     <% @websites.sort.each.with_index do |website, index| %>
       <div>
-        <a target="_blank" href="<%= website.content %>" class="button"><%= website.content %></a> <a href="/tags/<%= website.id %>"><sub><i><%= website.tag.content %></i></sub></a>
+        <a target="_blank" href="<%= website.content %>" class="button"><%= website.content %></a> <a href="/tags/<%= website.tag.id %>"><sub><i><%= website.tag.content %></i></sub></a>
         <label>- <a href="/websites/<%= website.id %>/edit">Edit</a></label>
       </div>
       <br>
