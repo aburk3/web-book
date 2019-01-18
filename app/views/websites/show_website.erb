@@ -1,21 +1,3 @@
-<!DOCTYPE html>
-<html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <title></title>
-  </head>
-  <body>
-    <div class="topnav">
-      <a class="active" href="/websites">Home</a>
-      <form action="/tags" method="POST" autocomplete="off">
-        <select id="tags" name="dropdown_tag">
-          <% @tags.each do |tag| %>
-          <option  value="<%= tag.id %>"><%= tag.content %></option>
-          <% end %>
-        </select>
-        <input id="tags" type="submit" value="submit" class="submitButton">
-      </form>
-    </div>
     <p><%= @website.content %></p>
     <p><%= @website.tag.content %></p>
     <form action="/websites/<%= @website.id %>/delete" method="post">
@@ -27,6 +9,3 @@
     <a href="/websites">Home</a>
     <br>
     <a href="/logout">Logout</a>
-
-  </body>
-</html>

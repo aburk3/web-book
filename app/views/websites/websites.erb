@@ -1,29 +1,10 @@
-<!DOCTYPE html>
-<html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-
-    <title></title>
-  </head>
-  <body>
-    <div class="topnav">
-      <a class="active" href="/websites">Home</a>
-      <form action="/tags" method="POST" autocomplete="off">
-        <select id="tags" name="dropdown_tag">
-          <% @tags.each do |tag| %>
-          <option  value="<%= tag.id %>"><%= tag.content %></option>
-          <% end %>
-        </select>
-        <input id="tags" type="submit" value="submit" class="submitButton">
-      </form>
-    </div>
     <p>Welcome, <%= current_user.username.capitalize %>!</p>
     <form action="/websites/new" method="GET">
       <button type="submit" name="button">Add New Website</button>
     </form>
     <br>
 
-    <% @websites.sort.each.with_index do |website, index| %>
+    <% @websites.each.with_index do |website, index| %>
       <div>
         <a target="_blank" href="<%= website.content %>" class="button"><%= website.content %></a> <a href="/tags/<%= website.tag.id %>"><sub><i><%= website.tag.content %></i></sub></a>
         <label>- <a href="/websites/<%= website.id %>/edit">Edit</a></label>
@@ -32,5 +13,3 @@
     <% end %>
     <br><br>
     <a href="/logout">Logout</a>
-  </body>
-</html>

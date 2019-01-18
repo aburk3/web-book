@@ -1,19 +1,6 @@
-<!DOCTYPE html>
-<html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <title></title>
-  </head>
-  <body>
-    <div class="topnav">
-      <a class="active" href="/websites">Home</a>
-
-    </div>
-    <h1><u>All Websites with the Tag of: <i><%= @tag.content %></i></u></h1>
-    <% @websites.each do |website| %>
-      <ul>
-        <li><a href="<%= website.content %>" type="button" class="button"><%= website.content %></a></li>
-      </ul>
-    <% end %>
-  </body>
-</html>
+<h1><u>All Websites with the Tag of: <i><%= @tag.content %></i></u></h1>
+<% @websites.each do |website| %>
+  <ul>
+    <li><a href="<%= website.content %>" type="button" class="button"><%= website.content %></a></li>
+  </ul>
+<% end %>

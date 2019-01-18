@@ -1,17 +1,16 @@
 class UsersController < ApplicationController
 
   get '/users/:slug' do
-     @user = User.find_by_slug(params[:slug])
-     erb :'users/show'
-   end
+    redirect_if_not_logged_in
+
+    @user = User.find_by_slug(params[:slug])
+    erb :'users/show'
+  end
 
   get '/signup' do
-     if !logged_in?
-       erb :'users/create_user'
-     else
-       redirect to '/websites'
-     end
-   end
+    redirect_if_not_logged_in
+    erb :'users/create_user'
+  end
 
   post '/signup' do
     if params[:username] == "" || params[:email] == "" || !params[:email].include?("@") || params[:password] == ""
@@ -29,29 +28,23 @@ class UsersController < ApplicationController
   end
 
   get '/login' do
-    if !logged_in?
-      redirect to '/'
-    else
-      redirect '/websites'
-    end
+    redirect_if_not_logged_in
   end
 
   post '/login' do
-   user = User.find_by(:username => params[:username])
-   if user && user.authenticate(params[:password])
-     session[:user_id] = user.id
-     redirect "/websites"
-   else
-     redirect to '/signup'
+    user = User.find_by(:username => params[:username])
+    if user && user.authenticate(params[:password])
+      session[:user_id] = user.id
+      redirect "/websites"
+    else
+      redirect to '/signup'
    end
  end
 
- get '/logout' do
-   if logged_in?
-     session.destroy
-     redirect to '/login'
-   else
-     redirect to '/'
-   end
+  get '/logout' do
+    redirect_if_not_logged_in
+
+    session.destroy
+    redirect to '/login'
   end
 end

@@ -1,120 +1,100 @@
 class WebsitesController < ApplicationController
   get '/websites' do
-    if logged_in?
-      @websites = current_user.websites
-      @tags = current_user.tags
-      erb :'websites/websites'
+    redirect_if_not_logged_in
+    
+    if params[:dropdown_tag]
+      @websites = Website.where(tag_id: params[:dropdown_tag])
     else
-      redirect to '/login'
+      @websites = current_user.websites
     end
+    @tags = current_user.tags
+    erb :'websites/websites'
   end
 
   get '/websites/new' do
-    @tags = current_user.tags
+    redirect_if_not_logged_in
 
-    if logged_in?
-      erb :'websites/new'
-    else
-      redirect to '/login'
-    end
+    @tags = current_user.tags
   end
 
   post '/websites' do
-    if logged_in?
-      if params[:content] == ""
-        redirect to "/websites/new"
-      else
+    redirect_if_not_logged_in
 
-        @website = current_user.websites.build(content: params[:content].downcase)
-
-        if !@website.content.include?("http") && !@website.content.include?("www")
-          @website.content.prepend("https://")
-        elsif @website.content.include?("www.")
-          @website.content.sub! 'www.', 'https://'
-        end
-
-        # Ensures there won't be a website with an empty tag value
-        if params[:dropdown_tag] == ""
-          params[:dropdown_tag] = "none"
-        end
-
-        #########################################################################
-        # If a tag has been created previously, you must check that the new tag #
-        # does not already exist, otherwise, no check is necessary              #
-        #########################################################################
-        if Tag.find_by(:content => params[:dropdown_tag])
-          @tag = Tag.find_by(:content => params[:dropdown_tag])
-          @tag.websites << @website
-        else
-          @website.tag = Tag.create(content: params[:dropdown_tag].downcase)
-        end
-
-        if @website.save
-          redirect to "/websites"
-        else
-          redirect to "/websites/new"
-        end
-      end
+    if params[:content] == ""
+      redirect to "/websites/new"
     else
-      redirect to '/login'
+
+      @website = current_user.websites.build(content: params[:content].downcase)
+      # Make this a model method
+      # @website.format_url
+      if !@website.content.include?("http") && !@website.content.include?("www")
+        @website.content.prepend("https://")
+      elsif @website.content.include?("www.")
+        @website.content.sub! 'www.', 'https://'
+      end
+
+      # Ensures there won't be a website with an empty tag value
+      if params[:dropdown_tag] == ""
+        params[:dropdown_tag] = "none"
+      end
+
+      #########################################################################
+      # If a tag has been created previously, you must check that the new tag #
+      # does not already exist, otherwise, no check is necessary              #
+      #########################################################################
+      if Tag.find_by(:content => params[:dropdown_tag])
+        @tag = Tag.find_by(:content => params[:dropdown_tag])
+        @tag.websites << @website
+      else
+        @website.tag = Tag.create(content: params[:dropdown_tag].downcase)
+      end
+
+      if @website.save
+        redirect to "/websites"
+      else
+        redirect to "/websites/new"
+      end
     end
   end
 
   get '/websites/:id' do
+    redirect_if_not_logged_in
     @tags = current_user.tags
 
-    if logged_in?
-      @website = Website.find_by_id(params[:id])
-      erb :'websites/show_website'
-    else
-      redirect to '/login'
-    end
+    @website = Website.find_by_id(params[:id])
+    erb :'websites/show_website'
   end
 
   get '/websites/:id/edit' do
-    if logged_in?
-      @website = Website.find_by_id(params[:id])
-      @tags = current_user.tags
-      erb :'websites/edit_website'
-    else
-      redirect to '/login'
-    end
+    redirect_if_not_logged_in
+
+    @website = Website.find_by_id(params[:id])
+    @tags = current_user.tags
+    erb :'websites/edit_website'
   end
 
   patch '/websites/:id' do
-    if logged_in?
-      if params[:content] == ""
-        redirect to "/websites/#{params[:id]}/edit"
-      else
-        @website = Website.find_by_id(params[:id])
-        if @website && @website.user == current_user
-          if @website.update(content: params[:content]) && @website.tag.update(content:params[:dropdown_tag])
-            redirect to "/websites"
-          else
-            redirect to "/websites/#{@website.id}/edit"
-          end
-        else
-          redirect to '/websites'
-        end
-      end
+    redirect_if_not_logged_in
+    if params[:content] == ""
+      redirect to "/websites/#{params[:id]}/edit"
     else
-      redirect to '/login'
+      @website = Website.find_by_id(params[:id])
+      if @website && @website.user == current_user
+        if @website.update(content: params[:content]) && @website.tag.update(content:params[:dropdown_tag])
+          redirect to "/websites"
+        else
+          redirect to "/websites/#{@website.id}/edit"
+        end
+      else
+        redirect to '/websites'
+      end
     end
   end
 
   delete '/websites/:id/delete' do
-    if logged_in?
-      @website = Website.find_by_id(params[:id])
-      if @website && @website.user == current_user
-        if @website.tag
-          @website.delete
-        else
-          @website.delete
-        end
-      end
-      redirect to '/websites'
-    else
-      redirect to '/login'
-    end
+    redirect_if_not_logged_in
+    @website = Website.find_by_id(params[:id])
+    @website.delete
+    redirect to '/websites'
   end
 end
