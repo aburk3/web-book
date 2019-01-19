@@ -8,7 +8,7 @@ class UsersController < ApplicationController
   end
 
   get '/signup' do
-    erb :'users/create_user'
+    erb :'users/create'
   end
 
   post '/signup' do
@@ -42,7 +42,7 @@ class UsersController < ApplicationController
 
   get '/logout' do
     redirect_if_not_logged_in
-    
+
     session.destroy
     redirect to '/login'
   end

@@ -11,6 +11,6 @@ class TagsController < ApplicationController
         @websites << website
       end
     end
-    erb :'tags/show_tag'
+    erb :'tags/show'
   end
 end

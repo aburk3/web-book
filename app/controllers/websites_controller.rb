@@ -58,7 +58,7 @@ class WebsitesController < ApplicationController
 
     @website = Website.find_by_id(params[:id])
     @tags = current_user.tags
-    erb :'websites/edit_website'
+    erb :'websites/edit'
   end
 
   patch '/websites/:id' do
