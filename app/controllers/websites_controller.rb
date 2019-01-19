@@ -1,7 +1,7 @@
 class WebsitesController < ApplicationController
   get '/websites' do
     redirect_if_not_logged_in
-    
+
     if params[:dropdown_tag]
       @websites = Website.where(tag_id: params[:dropdown_tag])
     else
@@ -15,6 +15,7 @@ class WebsitesController < ApplicationController
     redirect_if_not_logged_in
 
     @tags = current_user.tags
+    erb :'websites/new'
   end
 
   post '/websites' do
@@ -23,25 +24,20 @@ class WebsitesController < ApplicationController
     if params[:content] == ""
       redirect to "/websites/new"
     else
-
       @website = current_user.websites.build(content: params[:content].downcase)
-      # Make this a model method
-      # @website.format_url
-      if !@website.content.include?("http") && !@website.content.include?("www")
-        @website.content.prepend("https://")
-      elsif @website.content.include?("www.")
-        @website.content.sub! 'www.', 'https://'
-      end
+      @website.format_url
 
+      ##########################################################################
       # Ensures there won't be a website with an empty tag value
+      #
       if params[:dropdown_tag] == ""
         params[:dropdown_tag] = "none"
       end
 
-      #########################################################################
-      # If a tag has been created previously, you must check that the new tag #
-      # does not already exist, otherwise, no check is necessary              #
-      #########################################################################
+      ##########################################################################
+      # If a tag has been created previously, you must check that the new tag
+      # does not already exist, otherwise, no check is necessary
+      #
       if Tag.find_by(:content => params[:dropdown_tag])
         @tag = Tag.find_by(:content => params[:dropdown_tag])
         @tag.websites << @website
@@ -57,14 +53,6 @@ class WebsitesController < ApplicationController
     end
   end
 
-  get '/websites/:id' do
-    redirect_if_not_logged_in
-    @tags = current_user.tags
-
-    @website = Website.find_by_id(params[:id])
-    erb :'websites/show_website'
-  end
-
   get '/websites/:id/edit' do
     redirect_if_not_logged_in
 
@@ -75,6 +63,7 @@ class WebsitesController < ApplicationController
 
   patch '/websites/:id' do
     redirect_if_not_logged_in
+
     if params[:content] == ""
       redirect to "/websites/#{params[:id]}/edit"
     else
@@ -93,6 +82,7 @@ class WebsitesController < ApplicationController
 
   delete '/websites/:id/delete' do
     redirect_if_not_logged_in
+
     @website = Website.find_by_id(params[:id])
     @website.delete
     redirect to '/websites'
