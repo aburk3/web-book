@@ -26,6 +26,5 @@ class ApplicationController < Sinatra::Base
       redirect to '/' unless logged_in?
     end
 
-
   end
 end

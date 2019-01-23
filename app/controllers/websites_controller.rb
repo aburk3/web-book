@@ -1,9 +1,10 @@
 class WebsitesController < ApplicationController
+
   get '/websites' do
     redirect_if_not_logged_in
 
     if params[:dropdown_tag]
-      @websites = Website.where(tag_id: params[:dropdown_tag])
+      @websites = current_user.websites.where(tag_id: params[:dropdown_tag])
     else
       @websites = current_user.websites
     end
@@ -27,14 +28,12 @@ class WebsitesController < ApplicationController
       @website = current_user.websites.build(content: params[:content].downcase)
       @website.format_url
 
-      ##########################################################################
-      # Ensures there won't be a website with an empty tag value
-      #
       if params[:dropdown_tag] == ""
         params[:dropdown_tag] = "none"
       end
 
       ##########################################################################
+      #
       # If a tag has been created previously, you must check that the new tag
       # does not already exist, otherwise, no check is necessary
       #
@@ -64,19 +63,12 @@ class WebsitesController < ApplicationController
   patch '/websites/:id' do
     redirect_if_not_logged_in
 
-    if params[:content] == ""
-      redirect to "/websites/#{params[:id]}/edit"
+    @website = Website.find_by_id(params[:id])
+
+    if params[:content] != "" && @website.update(content: params[:content]) && @website.tag.update(content:params[:dropdown_tag])
+      redirect to "/websites"
     else
-      @website = Website.find_by_id(params[:id])
-      if @website && @website.user == current_user
-        if @website.update(content: params[:content]) && @website.tag.update(content:params[:dropdown_tag])
-          redirect to "/websites"
-        else
-          redirect to "/websites/#{@website.id}/edit"
-        end
-      else
-        redirect to '/websites'
-      end
+      redirect to "/websites/#{@website.id}/edit"
     end
   end
 
