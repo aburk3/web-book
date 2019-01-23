@@ -27,7 +27,6 @@ class WebsitesController < ApplicationController
     else
       @website = current_user.websites.build(content: params[:content].downcase)
       @website.format_url
-
       if params[:dropdown_tag] == ""
         params[:dropdown_tag] = "none"
       end
@@ -64,7 +63,6 @@ class WebsitesController < ApplicationController
     redirect_if_not_logged_in
 
     @website = Website.find_by_id(params[:id])
-
     if params[:content] != "" && @website.update(content: params[:content]) && @website.tag.update(content:params[:dropdown_tag])
       redirect to "/websites"
     else
