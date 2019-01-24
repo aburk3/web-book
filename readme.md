@@ -10,7 +10,7 @@ web-book is a desktop app :computer: to give users a better way to bookmark webs
 
 ## Installation
 1. Run `bundle install`
-2. Type `shotgun` in terminal while on the root directory
+2. Type `shotgun` in terminal while in the root directory
 
 ### Windows
 Working on it! :stuck_out_tongue_closed_eyes:
