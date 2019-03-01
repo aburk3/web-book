@@ -1,4 +1,4 @@
-web-book is a desktop app :computer: to give users a better way to bookmark websites and find/filter through them at a later point.
+web-book is a web app :computer: to give users a better way to bookmark websites and find/filter through them at a later point.
 
 # My Demo
 👉 Watch it <a href="https://www.youtube.com/watch?v=YjVBaEONDuk">here</a>.
